@@ -1,0 +1,1 @@
+[{"Intent":"Politesse","Reponse":"Bonjour","Action":1},{"Intent":"Identite","Reponse":"Bonjour","Action":1},{"Intent":"Meteo","Reponse":"le temps est {0}, il fait {1} degrés","Action":1}]

@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Gladys"
+             xmlns:ViewModel="clr-namespace:Gladys.ViewModel.ViewModels;assembly=Gladys.ViewModel"
+             xmlns:Service="clr-namespace:Gladys.Services.Services;assembly=Gladys.Services"
+             xmlns:Converters="clr-namespace:Gladys.Services.Services;assembly=Gladys.Services"
+             xmlns:CustomControls="clr-namespace:Gladys.CustomControls;assembly=Gladys.CustomControls"
+             x:Class="Gladys.MainPage"
+             BackgroundColor="#e6e6e6">
+
+    <ContentPage.BindingContext>
+        <ViewModel:MainPageController/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="ButtonForShowPanel" Order="Primary" Text="Menu" Clicked="ShowPanel"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converters:UserDialogue x:Key="BoolImage"></Converters:UserDialogue>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout VerticalOptions="CenterAndExpand" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Ligne 1-->
+                    <StackLayout Orientation="Vertical" Grid.Row="0" Margin="0,10,0,0" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+                        <ListView ItemsSource="{Binding Path=Speech,Mode=TwoWay}"
+                                  HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="FillAndExpand"
+                                  SeparatorVisibility="None"
+                                  HasUnevenRows="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Margin="0,10,0,10" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <StackLayout Orientation="Horizontal"
+                                                         Grid.Row="0"
+                                                         Grid.Column="{Binding Path=Index,Mode=TwoWay}"                                                         
+                                                         VerticalOptions="FillAndExpand"
+                                                         HorizontalOptions="{Binding Path=Horizontal,Mode=TwoWay}">
+
+                                                <Image  Source="{Binding Path=IsUser,Mode=TwoWay, Converter={StaticResource Key=BoolImage}}" 
+                                                        HorizontalOptions="End" >
+                                                    <Image.HeightRequest>
+                                                        <OnPlatform x:TypeArguments="x:Double">
+                                                            <On Platform="Android" Value="100"></On>
+                                                            <On Platform="iOS" Value="60"/>
+                                                            <On Platform="UWP" Value="25"/>
+                                                        </OnPlatform>
+                                                    </Image.HeightRequest>
+                                                    <Image.WidthRequest>
+                                                        <OnPlatform x:TypeArguments="x:Double">
+                                                            <On Platform="Android" Value="50"></On>
+                                                            <On Platform="iOS" Value="60"/>
+                                                            <On Platform="UWP" Value="25"/>
+                                                        </OnPlatform>
+                                                    </Image.WidthRequest>
+                                                </Image>
+
+                                                <Frame BackgroundColor="{Binding Path=Color,Mode=TwoWay}" Padding="0" CornerRadius="5" MinimumWidthRequest="50">
+                                                    <Label 
+                                                       Grid.Column="{Binding Path=Index,Mode=TwoWay}" Text="{Binding Path=Text,Mode=TwoWay}" 
+                                                       TextColor="Black" 
+                                                       LineBreakMode="WordWrap"
+                                                       BackgroundColor="Transparent"                                                       
+                                                       VerticalTextAlignment="Center"
+                                                       VerticalOptions="FillAndExpand"/>
+                                                </Frame>
+                                            </StackLayout>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <!--ligne 3-->
+                        <!--Firm-->
+                        <!--<Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            -->
+                        <!--<ListView ItemsSource="{Binding Path=Firms,Mode=TwoWay}" Grid.Column="0" SelectedItem="{Binding Path=Firm, Mode=TwoWay}" HasUnevenRows="True" RowHeight="30">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout BackgroundColor="#99e6eaef">
+                                                <Label Text="{Binding Path=FirmName,Mode=TwoWay}"
+                                           TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>-->
+                        <!--
+                            <ListView ItemsSource="{Binding Path=FirmSelected,Mode=TwoWay}" Grid.Column="1" SelectedItem="{Binding Path=ModelSelected, Mode=TwoWay}" HasUnevenRows="True" RowHeight="30">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout BackgroundColor="#99e6eaef">
+                                                <Label Text="{Binding Path=ModelName,Mode=TwoWay}"
+                                           TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>-->
+                        <!--Modele-->
+                        <!--<ListView ItemsSource="{Binding Path=Datas,Mode=TwoWay}" Grid.Row="2" SelectedItem="{Binding Path=Data, Mode=TwoWay}" HasUnevenRows="True" RowHeight="30">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout BackgroundColor="#99e6eaef" >
+                                            <Label Text="{Binding Path=Problem,Mode=TwoWay}"
+                                           TextColor="White" VerticalTextAlignment="Center"></Label>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                    </StackLayout>
+                    <!--ligne 2-->
+
+                    <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" BackgroundColor="#e6e6e6">
+                        <Entry Placeholder="{Binding Path=PlaceHolder,Mode=TwoWay}"
+                               Scale="0"
+                               CustomControls:AttachedProperties.EffectVisibility="{Binding IsTextEnabled,Mode=TwoWay}"
+                               CustomControls:AttachedProperties.Rotation="{Binding IsRotaionEntry,Mode=TwoWay}"
+                               HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"
+                               BackgroundColor="White"  VerticalOptions="CenterAndExpand"
+                                Text="{Binding Path=Request,Mode=TwoWay}"></Entry>
+                        <Button Command="{Binding Path=GetRequest,Mode=TwoWay}" Image="validation.png" BackgroundColor="Transparent"/>
+                    </StackLayout>
+                    <!--debut du Slider-->
+                    <StackLayout x:Name="Panel" Grid.Row="1" BackgroundColor="#99e6eaef" Orientation="Vertical">
+                        <Button x:Name="ButtonForHidePanel" Clicked="ShowPanel" Grid.Column="1" Image="unmore.png" BackgroundColor="Transparent"/>
+                        <Label Text="Fermer" HorizontalOptions="CenterAndExpand"/>
+                        <!--<Button Clicked="ShowPanel" Grid.Column="1" Image="settings.png" BackgroundColor="Transparent"/>
+                        <Label Text="Parametres" HorizontalOptions="CenterAndExpand"/>-->
+                        <Button Command="{Binding Path=PopupFirmCommand}" Grid.Column="1" Image="business.png" BackgroundColor="Transparent" />
+                        <Label Text="Sociétes" HorizontalOptions="CenterAndExpand"/>
+                        <Button Command="{Binding Path=PopupModelCommand}" Grid.Column="1" Image="model.png" BackgroundColor="Transparent" />
+                        <Label Text="Réferences" HorizontalOptions="CenterAndExpand"/>
+                        <Button Command="{Binding Path=PopupDataCommand}" Grid.Column="1" Image="model.png" BackgroundColor="Transparent" />
+                        <Label Text="Erreurs" HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                    <!--fin du Slider-->
+                </Grid>
+                <!--<Frame  BackgroundColor="#e6e6e6" BorderColor="Black" OutlineColor="Black" CornerRadius="5">
+                    <StackLayout Orientation="Horizontal"  BackgroundColor="Transparent">
+                        <Entry HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand"
+                                Text="{Binding Request,Mode=TwoWay}"></Entry>
+                        <Button Command="{Binding Path=GetRequest,Mode=TwoWay}" Image="validation.png" BackgroundColor="Transparent"/>
+                    </StackLayout>
+                </Frame>-->
+            </StackLayout>
+            <!--Firm-->
+            <StackLayout BackgroundColor="#89000000" IsVisible="{Binding IsPopupFirmVisible, Mode=TwoWay}"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Orientation="Vertical">
+                <Frame CornerRadius="15"
+                       HasShadow="True"
+                       Padding="1"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="Center">
+                    <StackLayout  VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Padding="40" BackgroundColor="White">
+                        <Label Text="Marque" HorizontalOptions="Center"/>
+                        <ListView ItemsSource="{Binding Path=Firms,Mode=TwoWay}" 
+                                  SelectedItem="{Binding Path=Firm, Mode=TwoWay}" HasUnevenRows="True"
+                                  RowHeight="50" SeparatorVisibility="Default"  SeparatorColor="Black">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout BackgroundColor="#99c1cbd7">
+                                            <Label Text="{Binding Path=FirmName,Mode=TwoWay}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="Center" HeightRequest="50"></Label>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Command="{Binding Path=PopupFirmCommand}" Text="Ok"></Button>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <!--Modele-->
+            <StackLayout BackgroundColor="#89000000" IsVisible="{Binding IsPopupModelVisible, Mode=TwoWay}"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Orientation="Vertical">
+                <Frame CornerRadius="15"
+                       HasShadow="True"
+                       Padding="1"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="Center">
+                    <StackLayout  VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Padding="40" BackgroundColor="White">
+                        <Label Text="Modele" HorizontalOptions="Center"/>
+                        <ListView ItemsSource="{Binding Path=FirmSelected,Mode=TwoWay}" 
+                                  SelectedItem="{Binding Path=ModelSelected, Mode=TwoWay}" HasUnevenRows="True"
+                                  RowHeight="50" SeparatorVisibility="Default"  SeparatorColor="Black">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout BackgroundColor="#99e6eaef">
+                                            <Label Text="{Binding Path=ModelName,Mode=TwoWay}"
+                                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="Center" HeightRequest="50"></Label>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Command="{Binding Path=PopupModelCommand}" Text="Ok"></Button>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <!--problème-->
+            <StackLayout BackgroundColor="#89000000" IsVisible="{Binding IsPopupDataVisible, Mode=TwoWay}"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" Orientation="Vertical">
+                <Frame CornerRadius="15"
+                       HasShadow="True"
+                       Padding="1"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="Center">
+                    <StackLayout  VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Padding="40" BackgroundColor="White">
+                        <Label Text="Problème" HorizontalOptions="Center"/>
+                        <ListView ItemsSource="{Binding Path=Datas,Mode=TwoWay}" Grid.Row="2" SelectedItem="{Binding Path=Data, Mode=TwoWay}"
+                                  HasUnevenRows="True"
+                                  RowHeight="50" SeparatorVisibility="Default"  SeparatorColor="Black">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout BackgroundColor="#99e6eaef" >
+                                            <Label Text="{Binding Path=Problem,Mode=TwoWay}"
+                                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="Center" HeightRequest="50"></Label>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Command="{Binding Path=PopupDataCommand}" Text="Ok"></Button>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
